@@ -1,2 +1,3 @@
-# python-recipes
-Playground and collection of python code.
+# Python-recipes
+
+A collection of quick reference, gists, playground, and sample code.
