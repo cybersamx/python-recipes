@@ -4,10 +4,7 @@
 # Top-most editor config file
 root = true
 
-# --- All files ---
-
-# Includes json, yaml, yml, sh.
-
+### Global ###
 [*]
 end_of_line = lf
 insert_final_newline = true
@@ -16,15 +13,19 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
 
-# --- Go ---
+### Go ###
 [*.go]
 indent_style = tab
 indent_size = 4
 
-# --- Python ---
+### Python ###
 [*.py]
 indent_size = 4
 
-# --- HTML ---
+### Markdown ###
+max_line_length = 0
+trim_trailing_whitespace = false
+
+### HTML ###
 [*.{html,htm}]
 indent_size = 2
