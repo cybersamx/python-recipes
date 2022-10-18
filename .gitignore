@@ -151,4 +151,5 @@ dmypy.json
 cython_debug/
 
 ### Others ###
-/tmp
+/.tmp
+**/test.sqlite
