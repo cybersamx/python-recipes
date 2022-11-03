@@ -1,6 +1,14 @@
+# To import one level up, use:
+from ..multiply import multiply
+# To import a module at the same level, use:
+from ..fmt.log import println
+
+
 def triangle_area(h, b):
-    return 0.5 * (h * b)
+    println("triangle_area called")
+    return 0.5 * multiply(h, b)
 
 
 def rect_area(l, w):
-    return l * w
+    println("rect_area called")
+    return multiply(l, w)
