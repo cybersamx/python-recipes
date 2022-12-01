@@ -1,7 +1,7 @@
 # To import one level up, use:
 from ..multiply import multiply
-# To import a module at the same level, use:
-from ..fmt.log import println
+# To import 2 levels up, use:
+from ...fmt.log import println
 
 
 def triangle_area(h, b):

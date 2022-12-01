@@ -1,4 +1,4 @@
-from .fmt.log import println
+from ..fmt.log import println
 
 PI = 3.14159
 
