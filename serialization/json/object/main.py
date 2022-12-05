@@ -2,13 +2,13 @@ import json
 from config import Config
 
 
-def decoder(dct):
+def decoder(dct: dict) -> Config:
     return Config(**dct)
 
 
 def json_to_obj():
     json_data = '{"debug": true, "connection_string": "postgres://user:password@pg/db"}'
-    # object_hook is a handler that can be used to convert a dict of parsed json values
+    # object_hook is a handler that is used to convert a dict of parsed json values
     # into a python custom object.
     cfg = json.loads(json_data, object_hook=decoder)
     print(cfg.debug, cfg.connection_string)

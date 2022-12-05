@@ -3,7 +3,7 @@ import json
 from config import Config,DbConfig
 
 
-def decoder(dct):
+def decoder(dct: dict) -> Config:
     if dct.get('username') is not None:
         return DbConfig(**dct)
     return Config(**dct)
