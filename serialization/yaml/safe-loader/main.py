@@ -2,9 +2,16 @@ import yaml
 from config import Config, DbConn
 
 
-def config_constructor(loader: yaml.Loader, node: yaml.nodes.MappingNode) -> Config:
-    dct = loader.construct_mapping(node)
-    return Config(**dct)
+def load_yaml(data, loader=yaml.Loader):
+    # Define a custom loader so that we leave the global yaml.Loader.
+    class Loader(loader):
+        def config_constructor(self, node) -> Config:
+            dct = self.construct_mapping(node)
+            return Config(**dct)
+
+    Loader.add_constructor('!Config', loader.config_constructor)
+
+    return yaml.load(data, Loader=Loader)
 
 
 def yaml_to_obj():
@@ -30,8 +37,9 @@ def yaml_to_obj():
 
     # A constructor is a handler that is used to convert a yaml node that's tagged with an associated tag
     # into a python custom object.
-    yaml.SafeLoader.add_constructor('!Config', constructor=config_constructor)
-    cfg = yaml.load(yaml_data, Loader=yaml.SafeLoader)
+    # yaml.SafeLoader.add_constructor('!Config', constructor=config_constructor)
+    # cfg = yaml.load(yaml_data, Loader=yaml.SafeLoader)
+    cfg = load_yaml(yaml, yaml.SafeLoader)
     print(cfg)
 
 

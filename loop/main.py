@@ -21,7 +21,7 @@ for i in range(size):              # Shorthand
     print(numbers[i], end=' ')     # Prints 9, 8, 7
 print()
 
-# For-in loop using xrange.
+# For-in loop using xrange (xrange is a python2 syntax)
 if sys.version_info[0] < 3:
     for i in xrange(size):
         print(numbers[i], end=' ')  # Prints 9, 8, 7
@@ -44,3 +44,8 @@ text = 'hello'
 for n in text:
     print(n, end=' ')              # Prints h, e, l, l, o
 print()
+
+# C-style for-loop. Equivalent to:
+# for (i=2; i<20; i+=4)
+for i in range(2, 20, 4):
+    print(i, end=' ')
