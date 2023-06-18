@@ -6,8 +6,8 @@ from dataclass_wizard import JSONWizard
 class DbConfig(JSONWizard):
     username: str
     password: str
-    host:     str = None  # Assign a default value to mark the host field in json optional
-    db:       str = None  # Assign a default value to mark the host field in json optional
+    host:     str = None  # Marks the host attribute as optional
+    db:       str = None  # Marks the db attribute as optional
 
 
 @dataclass

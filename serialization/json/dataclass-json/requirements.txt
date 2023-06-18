@@ -1,0 +1,2 @@
+dataclasses-json==0.5.8
+marshmallow==3.19.0
