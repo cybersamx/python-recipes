@@ -27,7 +27,7 @@ def obj_to_json():
         DbConfig('pguser', 'pass', 'pg', 'db'),
         scheduled_boot=datetime(2023, 5, 4, 16, 0, 0)
     )
-    json_output = cfg.to_json()
+    json_output = cfg.to_json(indent=4)
     print(json_output)
 
 

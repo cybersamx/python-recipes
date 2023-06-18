@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, Field
-from dataclasses_json import config, dataclass_json, LetterCase
+from dataclasses_json import config, cfg, dataclass_json, LetterCase, Undefined
 from datetime import datetime
 from marshmallow import fields
 from typing import Optional
@@ -18,15 +18,22 @@ def from_iso(text: str) -> datetime | None:
 # We need to pass the encoder and decoder to dataclass_json.
 #
 # See https://github.com/lidatong/dataclasses-json#Overriding
+# Note:
+# One annoying thing about dataclass-json is that it doesn't skip a field if it's None during
+# json encoding. This results in `{... "scheduledShutdown": null, ...}`.
 def datetime_converter() -> Field | None:
     return field(
         default=None,
         metadata=config(
             encoder=to_iso,
             decoder=from_iso,
-            mm_field=fields.DateTime(format='iso')
+            mm_field=fields.DateTime(format='iso'),
+            exclude=lambda x: x is None,
         )
     )
+
+
+cfg.global_config.encoders
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
