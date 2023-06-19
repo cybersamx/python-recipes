@@ -25,7 +25,7 @@ $(VENV)/bin/activate: requirements.txt
 .PHONY: venv
 venv: $(VENV)/bin/activate
 
-##@ run: Run the program.
+##@ run: Run the program
 
 .PHONY: run
 run: venv lint
@@ -38,6 +38,13 @@ run: venv lint
 lint:
 	@echo "$(BOLD)$(BLUE)Run linter against the python project.$(RESET)"
 	flake8 *.py
+
+##@ test: Test unit tests
+
+.PHONY: test
+test: venv
+	@echo "$(BOLD)$(BLUE)Run all unit tests.$(RESET)"
+	python -m unittest
 
 ##@ clean: Clean output files and build cache
 
