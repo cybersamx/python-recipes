@@ -6,7 +6,11 @@ class WarningException(Exception):
 
 
 class ErrorException(Exception):
-    pass
+    def __init__(self, status_code: int):
+        self.status_code = status_code
+
+    def __str__(self):
+        return f'status_code={str(self.status_code)}'
 
 
 class FatalException(Exception):
@@ -23,6 +27,9 @@ class AppError(Exception):
 
 for ex in [WarningException, ErrorException, FatalException, PanicException]:
     try:
+        if ex is ErrorException:
+            raise ex(status_code=500)
+
         raise ex()
     except WarningException as err:
         pass  # This exception is the exception :-)
