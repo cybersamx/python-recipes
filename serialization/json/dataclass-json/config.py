@@ -1,5 +1,5 @@
-from dataclasses import dataclass, field, Field
-from dataclasses_json import config, cfg, dataclass_json, LetterCase, Undefined
+from dataclasses import dataclass, field, Field, MISSING
+from dataclasses_json import config, dataclass_json, LetterCase
 from datetime import datetime
 from marshmallow import fields
 from typing import Optional
@@ -21,28 +21,35 @@ def from_iso(text: str) -> datetime | None:
 # Note:
 # One annoying thing about dataclass-json is that it doesn't skip a field if it's None during
 # json encoding. This results in `{... "scheduledShutdown": null, ...}`.
-def datetime_converter() -> Field | None:
-    return field(
-        default=None,
+def datetime_field(null: bool = True) -> Field | None:
+    f = field(
+        default=None if null else MISSING,
         metadata=config(
             encoder=to_iso,
             decoder=from_iso,
             mm_field=fields.DateTime(format='iso'),
             exclude=lambda x: x is None,
-        )
+        ),
     )
 
+    return f
 
-cfg.global_config.encoders
 
+def null_field() -> Field | None:
+    return field(
+        default=None,
+        metadata=config(
+            exclude=lambda x: x is None,
+        )
+    )
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class DbConfig(object):
     username: str
     password: str
-    host:     Optional[str] = None  # Marks the host attribute as optional
-    db:       Optional[str] = None  # Marks the db attribute as optional
+    host:     Optional[str] = null_field()  # Marks the host attribute as optional
+    db:       Optional[str] = null_field()  # Marks the db attribute as optional
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
@@ -50,6 +57,12 @@ class DbConfig(object):
 class Config(object):
     debug: bool
     db_config: DbConfig
-    scheduled_shutdown: Optional[datetime] = datetime_converter()
-    scheduled_boot: Optional[datetime] = datetime_converter()
+    created_at: datetime = datetime_field(null=False)  # Required field
+    scheduled_shutdown: Optional[datetime] = datetime_field()
+    scheduled_boot: Optional[datetime] = datetime_field()
+    # If we declare the following filed as Optional[str] = None, we will get
+    # {... "telemetryHost": null ...} in the json object. We need to omit
+    # this field in json if its value is None.
+    # So instead of this `telemetry_host: Optional[str] = None`, do the following:
+    telemetry_host: Optional[str] = null_field()
 
