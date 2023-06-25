@@ -101,6 +101,7 @@ The different formats of escape sequences in various programming languages.
 
 ```python
 name = 'sam'
+print(f'hello {name}')
 print("hello %s" % name)   # Use %d for numerical value
 print("hello {0}".format(name))
 print("hello {text}".format(text=name))
