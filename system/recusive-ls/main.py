@@ -9,15 +9,15 @@ def ls(path: str):
 
     local_path = pathlib.Path(path)
     for f in local_path.iterdir():
-        if f.is_dir() and f.name != '.':
-            ls(os.path.join(local_path.name, f.name))
+        if f.is_dir():
+            ls(os.path.join(path, f.name))
 
-        cwd = f'.{os.sep}{f.name}' if local_path.name == '' else f'.{os.sep}{local_path.name}{os.sep}{f.name}'
+        cwd = f'.{os.sep}{f}'
         print(cwd)
 
 
 def main():
-    ls('.')
+    ls('folder-a')
 
 
 if __name__ == '__main__':
